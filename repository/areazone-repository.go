@@ -19,34 +19,35 @@ type AreazoneConnnect struct {
 
 // CreateAreazone implements AreazoneRepository
 func (az *AreazoneConnnect) CreateAreazone(areazone entity.Areazone) entity.Areazone {
-	az.connect.Table("area_zone").Save(areazone)
+	az.connect.Table("area_zone").Save(&areazone)
 	return areazone
 }
 
 // DeleteAreazone implements AreazoneRepository
 func (az *AreazoneConnnect) DeleteAreazone(areazone entity.Areazone) entity.Areazone {
-	az.connect.Table("area_zone").Delete(areazone)
+	az.connect.Table("area_zone").Delete(&areazone)
 	return areazone
 }
 
 // FindById implements AreazoneRepository
 func (az *AreazoneConnnect) FindById(id uint64) entity.Areazone {
 	var areazone entity.Areazone
-	az.connect.Table("area_zone").Find(areazone, id)
+	az.connect.Table("area_zone").Find(&areazone, id)
 	return areazone
 }
 
 // Findlistall implements AreazoneRepository
 func (az *AreazoneConnnect) Findlistall() []entity.Areazone {
 	var areazone []entity.Areazone
-	az.connect.Table("area_zone").Find(areazone)
+	az.connect.Table("area_zone").Find(&areazone)
 	return areazone
 
 }
 
 // UpdateAreazone implements AreazoneRepository
-func (*AreazoneConnnect) UpdateAreazone(areazone entity.Areazone) entity.Areazone {
-	panic("unimplemented")
+func (az *AreazoneConnnect) UpdateAreazone(areazone entity.Areazone) entity.Areazone {
+	az.connect.Table("area_zone").Updates(&areazone)
+	return areazone
 }
 
 func NewAreazoneRepository(db *gorm.DB) AreazoneRepository {

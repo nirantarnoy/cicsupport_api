@@ -32,12 +32,13 @@ func (az *areazoneService) CheckAllowed(userId string, areazoneId uint64) bool {
 	res := az.areagzoneRepo.FindById(areazoneId)
 	id := fmt.Sprintf("%v", res.Created_by)
 	return userId == id
+	//return true
 }
 
 // CreateAreazone implements AreazoneService
 func (az *areazoneService) CreateAreazone(areazoneDto dto.AreazoneCreateDto) entity.Areazone {
 	areazone := entity.Areazone{}
-	err := smapping.FillStruct(&areazone, smapping.MapFields(areazoneDto))
+	err := smapping.FillStruct(&areazone, smapping.MapFields(&areazoneDto))
 	if err != nil {
 		log.Fatalf("Fail to map %v", err)
 	}
@@ -58,12 +59,13 @@ func (az *areazoneService) FindListAll() []entity.Areazone {
 // UpdateAreazone implements AreazoneService
 func (az *areazoneService) UpdateAreazone(areazoneDto dto.AreazoneUpdateDto) entity.Areazone {
 	areazone := entity.Areazone{}
-	err := smapping.FillStruct(&areazone, smapping.MapFields(areazoneDto))
+	err := smapping.FillStruct(&areazone, smapping.MapFields(&areazoneDto))
 	if err != nil {
 		log.Fatalf("Fail to map %v", err)
 	}
-
-	return az.areagzoneRepo.UpdateAreazone(areazone)
+	log.Print(areazone)
+	res := az.areagzoneRepo.UpdateAreazone(areazone)
+	return res
 }
 
 func NewAreazoneService(repo repository.AreazoneRepository) AreazoneService {

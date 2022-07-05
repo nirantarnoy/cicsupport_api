@@ -24,6 +24,10 @@ var (
 	areagroupRepository repository.AreagroupRepository = repository.NewAreaGroupRepository(db)
 	areagroupService    service.AreagroupService       = service.NewAreaGroupService(areagroupRepository)
 	areagroupController controller.AreagroupController = controller.NewAreagroupController(areagroupService, jwtService)
+
+	areazoneRepository repository.AreazoneRepository = repository.NewAreazoneRepository(db)
+	areazoneService    service.AreazoneService       = service.NewAreazoneService(areazoneRepository)
+	areazoneController controller.AreazoneController = controller.NewAreazoneController(areazoneService, jwtService)
 )
 
 func main() {
@@ -60,7 +64,10 @@ func main() {
 
 	areazoneRoute := server.Group("api/areazone", middleware.AuthorizeJWT(jwtService))
 	{
-		areazoneRoute.GET("listall")
+		areazoneRoute.GET("/listall", areazoneController.Findall)
+		areazoneRoute.POST("/create", areazoneController.Create)
+		areazoneRoute.PUT("/update/:id", areazoneController.Update)
+		areazoneRoute.DELETE("/delete/:id", areazoneController.Delete)
 	}
 
 	server.Run(":1223")
