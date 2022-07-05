@@ -58,5 +58,10 @@ func main() {
 		areagroupRoute.DELETE("/delete/:id", areagroupController.Delete)
 	}
 
+	areazoneRoute := server.Group("api/areazone", middleware.AuthorizeJWT(jwtService))
+	{
+		areazoneRoute.GET("listall")
+	}
+
 	server.Run(":1223")
 }
