@@ -20,7 +20,7 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 
 func (db *UserConnect) FindByUserAD(userAD string) entity.User {
 	var user entity.User
-	db.connect.Table("person").Where("ad_user = ?", userAD).Take(&user)
+	db.connect.Table("user").Where("dns_user = ?", userAD).Take(&user)
 	return user
 }
 

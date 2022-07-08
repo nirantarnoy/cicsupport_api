@@ -28,6 +28,10 @@ var (
 	areazoneRepository repository.AreazoneRepository = repository.NewAreazoneRepository(db)
 	areazoneService    service.AreazoneService       = service.NewAreazoneService(areazoneRepository)
 	areazoneController controller.AreazoneController = controller.NewAreazoneController(areazoneService, jwtService)
+
+	topicItemRepository repository.TopiceitemRepository = repository.NewTopicitemRepository(db)
+	topicItemService    service.TopicItemService        = service.NewTopicItemService(topicItemRepository)
+	topicItemController controller.TopicItemController  = controller.NewTopicItemController(topicItemService, jwtService)
 )
 
 func main() {
@@ -68,6 +72,11 @@ func main() {
 		areazoneRoute.POST("/create", areazoneController.Create)
 		areazoneRoute.PUT("/update/:id", areazoneController.Update)
 		areazoneRoute.DELETE("/delete/:id", areazoneController.Delete)
+	}
+
+	topicItemRoute := server.Group("api/topicitem", middleware.AuthorizeJWT(jwtService))
+	{
+		topicItemRoute.GET("/findtopicbyplan/:id", topicItemController.FindTopicByPlan)
 	}
 
 	server.Run(":1223")

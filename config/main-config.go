@@ -8,10 +8,12 @@ import (
 )
 
 var (
-	dbUserMysql = "root"
-	dbPassMysql = "Tamakogi2012"
+	dbUserMysql = "cicuser"
+	dbPassMysql = "Ax12345678"
+	//dbUserMysql = "root"
+	//dbPassMysql = "Tamakogi2012"
 
-	db = [2]string{"172.16.0.27", "cicsupport"}
+	db = [2]string{"192.168.60.195", "cicsupport"}
 
 	dsn1 = fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUserMysql, dbPassMysql,
 		db[0], db[1])
