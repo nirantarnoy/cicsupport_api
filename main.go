@@ -32,6 +32,14 @@ var (
 	topicItemRepository repository.TopiceitemRepository = repository.NewTopicitemRepository(db)
 	topicItemService    service.TopicItemService        = service.NewTopicItemService(topicItemRepository)
 	topicItemController controller.TopicItemController  = controller.NewTopicItemController(topicItemService, jwtService)
+
+	planRepository repository.PlanRepository = repository.NewPlanRepository(db)
+	planService    service.PlanService       = service.NewPlanService(planRepository)
+	planController controller.PlanController = controller.NewPlanController(planService, jwtService)
+
+	teaminspectionitemRepository repository.TeaminspectionitemRepository = repository.NewTeaminspectionitemRepository(db)
+	teaminspectionitemService    service.TeaminspectionitemService       = service.NewTeaminspectionitemService(teaminspectionitemRepository)
+	teaminspectionitemController controller.TeaminspectionitemController = controller.NewIteminspectionitemController(teaminspectionitemService, jwtService)
 )
 
 func main() {
@@ -77,6 +85,17 @@ func main() {
 	topicItemRoute := server.Group("api/topicitem", middleware.AuthorizeJWT(jwtService))
 	{
 		topicItemRoute.GET("/findtopicbyplan/:id", topicItemController.FindTopicByPlan)
+	}
+
+	planRoute := server.Group("api/plan", middleware.AuthorizeJWT(jwtService))
+	{
+		planRoute.GET("/findplan/:id", planController.FindPlanByTeam)
+		planRoute.POST("/addinspection", planController.AddInspection)
+	}
+
+	teaminspectionitemRoute := server.Group("api/teaminspectionitem", middleware.AuthorizeJWT(jwtService))
+	{
+		teaminspectionitemRoute.GET("/findbyteam/:id", teaminspectionitemController.FindInspectionItem)
 	}
 
 	server.Run(":1223")

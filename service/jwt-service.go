@@ -38,7 +38,7 @@ func getSecretKey() string {
 func (j *jwtService) GenerateToken(UserID string) string {
 	calims := &jwTCustomClaim{
 		UserID, jwt.StandardClaims{
-			ExpiresAt: time.Now().AddDate(0, 0, 1).Unix(),
+			ExpiresAt: time.Now().AddDate(0, 0, 7).Unix(),
 			Issuer:    j.issuer,
 			IssuedAt:  time.Now().Unix(),
 		},
