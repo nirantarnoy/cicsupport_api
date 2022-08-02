@@ -3,7 +3,9 @@ package repository
 import (
 	"encoding/base64"
 	"fmt"
+	"log"
 	"os"
+	"runtime"
 	"strconv"
 	"time"
 
@@ -41,6 +43,7 @@ func (db *carRepository) CreateCar(car entity.CarCreate) entity.CarCreate {
 
 func CreateCarImage(db *carRepository, id int, photo []string) {
 	var z = 0
+	var ostypename = ""
 	for _, s := range photo {
 		//fmt.Println(i, s)
 		z += 1
@@ -54,7 +57,21 @@ func CreateCarImage(db *carRepository, id int, photo []string) {
 		var new_file = strconv.FormatInt(time.Now().Unix(), 20) + y + ".jpg"
 		//f, err := os.Create("http://172.16.0.29/cicsupport/backend/web/uploads/myfilename.jpg")
 		//	f, err := os.OpenFile("uploads/5s/car/"+new_file, os.O_WRONLY|os.O_CREATE, 0777)//administrator@172.16.0.240/uploads
-		f, err := os.OpenFile("/Volumes/uploads/"+new_file, os.O_WRONLY|os.O_CREATE, 0777) //administrator@172.16.0.240/uploads
+
+		ostype := runtime.GOOS
+
+		log.Print(ostype)
+
+		// if ostype == "linux" {
+
+		// }
+		if ostype == "darwin" {
+			ostypename = "/Volumes/uploads/"
+		} else {
+			ostypename = "/mnt/uploads/"
+		}
+
+		f, err := os.OpenFile(ostypename+new_file, os.O_WRONLY|os.O_CREATE, 0777) //administrator@172.16.0.240/uploads
 		if err != nil {
 			panic(err)
 		}
