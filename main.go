@@ -40,6 +40,14 @@ var (
 	teaminspectionitemRepository repository.TeaminspectionitemRepository = repository.NewTeaminspectionitemRepository(db)
 	teaminspectionitemService    service.TeaminspectionitemService       = service.NewTeaminspectionitemService(teaminspectionitemRepository)
 	teaminspectionitemController controller.TeaminspectionitemController = controller.NewIteminspectionitemController(teaminspectionitemService, jwtService)
+
+	carinspectRepository repository.CarinspecRepository = repository.NewCarinspecRepository(db)
+	carinspectService    service.CarinspecSevice        = service.NewCarinspecService(carinspectRepository)
+	carinspectController controller.CarinspecController = controller.NewCarinspecController(carinspectRepository, jwtService)
+
+	carRepository repository.CarRepository = repository.NewCarRepository(db)
+	carService    service.CarService       = service.NewCarService(carRepository)
+	carController controller.CarController = controller.NewCarController(carService, jwtService)
 )
 
 func main() {
@@ -64,6 +72,8 @@ func main() {
 	userRoute := server.Group("api/user", middleware.AuthorizeJWT(jwtService))
 	{
 		userRoute.GET("/profile", userController.Profile)
+		userRoute.GET("/teammember/:id", userController.FindUserTeam)
+
 	}
 
 	areagroupRoute := server.Group("api/areagroup", middleware.AuthorizeJWT(jwtService))
@@ -96,6 +106,16 @@ func main() {
 	teaminspectionitemRoute := server.Group("api/teaminspectionitem", middleware.AuthorizeJWT(jwtService))
 	{
 		teaminspectionitemRoute.GET("/findbyteam/:id", teaminspectionitemController.FindInspectionItem)
+	}
+
+	carinspectionRoute := server.Group("api/carinspection", middleware.AuthorizeJWT(jwtService))
+	{
+		carinspectionRoute.GET("/findall", carinspectController.NonconformList)
+	}
+	carRoute := server.Group("api/car", middleware.AuthorizeJWT(jwtService))
+	{
+		carRoute.POST("/createcar", carController.CreateCar)
+		carRoute.GET("/listcarbyemp/:id", carController.ListCarByEmpId)
 	}
 
 	server.Run(":1223")
