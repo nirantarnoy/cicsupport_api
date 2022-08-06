@@ -48,6 +48,10 @@ var (
 	carRepository repository.CarRepository = repository.NewCarRepository(db)
 	carService    service.CarService       = service.NewCarService(carRepository)
 	carController controller.CarController = controller.NewCarController(carService, jwtService)
+
+	teamNotifyRepository repository.TeamNotifyRepository = repository.NewTeamnotifyRepository(db)
+	teamNotifyServicer   service.TeamNotifyService       = service.NewTeamnotifyService(teamNotifyRepository)
+	teamNotifyController controller.TeamNofiryController = controller.NewTeamNotifyController(teamNotifyServicer, jwtService)
 )
 
 func main() {
@@ -116,6 +120,10 @@ func main() {
 	{
 		carRoute.POST("/createcar", carController.CreateCar)
 		carRoute.GET("/listcarbyemp/:id", carController.ListCarByEmpId)
+	}
+	teamNotifyRoute := server.Group("api/teamnotify", middleware.AuthorizeJWT(jwtService))
+	{
+		teamNotifyRoute.GET("/findempnotify/:id", teamNotifyController.FindEmpNotify)
 	}
 
 	server.Run(":1223")
