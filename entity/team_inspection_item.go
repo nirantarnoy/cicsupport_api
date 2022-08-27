@@ -16,5 +16,5 @@ type TeamInspectionItem struct {
 	TopicName            string `json:"topic_name"`
 	TopicItemId          uint64 `json:"topic_item_id"`
 	TopicItemName        string `json:"topic_item_name"`
-	IsEnable             uint64 `json:"is_enable"`
+	Is_enable            uint64 `json:"is_enable"`
 }

@@ -7,7 +7,7 @@ import (
 
 type UserRepository interface {
 	FindByUserAD(userAD string) entity.User
-	ProfileUser(userID string) entity.User
+	ProfileUser(userID string, username string) entity.User
 	FindUserTeam(team_id uint64) []entity.TeamMember
 }
 
@@ -37,8 +37,9 @@ func (db *UserConnect) FindByUserAD(userAD string) entity.User {
 	return user
 }
 
-func (db *UserConnect) ProfileUser(userID string) entity.User {
+func (db *UserConnect) ProfileUser(userID string, username string) entity.User {
 	var user entity.User
-	db.connect.Table("person").Find(&user, userID)
+	//	db.connect.Table("person").Find(&user, userID)
+	db.connect.Table("person").Where("ad_user = ?", username).Find(&user)
 	return user
 }

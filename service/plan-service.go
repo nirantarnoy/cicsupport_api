@@ -11,6 +11,7 @@ import (
 
 type PlanService interface {
 	FindPlanByTeam(team_id uint64) entity.Plan
+
 	AddInspection(inspectionData []dto.InspectionCreateDTO) entity.InspectionRecord
 }
 type planService struct {

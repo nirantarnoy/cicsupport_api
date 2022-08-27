@@ -6,7 +6,7 @@ import (
 )
 
 type UserService interface {
-	Profile(userID string) entity.User
+	Profile(userID string, userName string) entity.User
 	FindUserTeam(team_id uint64) []entity.TeamMember
 }
 
@@ -25,6 +25,6 @@ func NewUserService(userRepo repository.UserRepository) UserService {
 	}
 }
 
-func (u *userService) Profile(userID string) entity.User {
-	return u.userRepo.ProfileUser(userID)
+func (u *userService) Profile(userID string, username string) entity.User {
+	return u.userRepo.ProfileUser(userID, username)
 }

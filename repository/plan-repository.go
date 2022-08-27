@@ -9,6 +9,7 @@ type PlanRepository interface {
 	FindPlan(module_type_id uint64) []entity.Plan
 	UpdatePlan(plan entity.Plan) entity.Plan
 	FindPlanByTeam(team_id uint64) entity.Plan
+
 	AddInspection(inspection entity.InspectionRecord) entity.InspectionRecord
 }
 
@@ -36,7 +37,7 @@ func (pl *planConnect) UpdatePlan(plan entity.Plan) entity.Plan {
 }
 
 // FindPlan implements PlanRepository
-func (*planConnect) FindPlan(module_type_id uint64) []entity.Plan {
+func (pl *planConnect) FindPlan(module_type_id uint64) []entity.Plan {
 	panic("unimplemented")
 }
 

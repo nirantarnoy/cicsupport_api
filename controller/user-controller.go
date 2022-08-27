@@ -40,13 +40,19 @@ func NewUserController(userService service.UserService, jwtService service.JWTSe
 }
 
 func (u *userController) Profile(ctx *gin.Context) {
+	ad_user := ctx.Param("id")
+	if ad_user == "" {
+		res := "No param"
+		ctx.JSON(http.StatusBadRequest, res)
+	}
+
 	authHeader := ctx.GetHeader("Authorization")
 	token, err := u.jwtService.ValidateToken(authHeader)
 	if err != nil {
 		panic(err.Error())
 	}
 	claims := token.Claims.(jwt.MapClaims)
-	user := u.userService.Profile(fmt.Sprintf("%v", claims["user_id"]))
+	user := u.userService.Profile(fmt.Sprintf("%v", claims["user_id"]), ad_user)
 	res := helper.BuildResponse(true, "OK", user)
 	ctx.JSON(http.StatusOK, res)
 }

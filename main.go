@@ -75,7 +75,7 @@ func main() {
 
 	userRoute := server.Group("api/user", middleware.AuthorizeJWT(jwtService))
 	{
-		userRoute.GET("/profile", userController.Profile)
+		userRoute.GET("/profile/:id", userController.Profile)
 		userRoute.GET("/teammember/:id", userController.FindUserTeam)
 
 	}

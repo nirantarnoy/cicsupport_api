@@ -16,7 +16,7 @@ type topiceitemConnect struct {
 // FindTopicByPlan implements TopiceitemRepository
 func (db *topiceitemConnect) FindTopicByPlan(planId uint64) []entity.TopicItem {
 	var topicitems []entity.TopicItem
-	db.connect.Table("qry_topic_item").Find(&topicitems, planId)
+	db.connect.Table("qry_topic_item").Find(&topicitems, planId).Order("seq_sort")
 	return topicitems
 }
 
