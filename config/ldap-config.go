@@ -2,12 +2,13 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/go-ldap/ldap/v3"
 )
 
 const (
 	MapUser = "administrator@cicnetgrp.net"
-	MapPass = "Tamakogi@&2019$"
+	MapPass = "Tamagogi@&2019$"
 	FQDN    = "172.16.0.205"
 	BaseDN  = "cn=Configuration,dc=cicnetgrp,dc=net"
 	Filter  = "(objectClass=*)"

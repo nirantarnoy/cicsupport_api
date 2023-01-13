@@ -17,4 +17,6 @@ type TeamInspectionItem struct {
 	TopicItemId          uint64 `json:"topic_item_id"`
 	TopicItemName        string `json:"topic_item_name"`
 	Is_enable            uint64 `json:"is_enable"`
+	Seq_sort             uint64 `json:"seq_sort"`
+	Seq_sort_item        uint64 `json:"seq_sort_item"`
 }
