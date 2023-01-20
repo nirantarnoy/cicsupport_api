@@ -3,6 +3,7 @@ package dto
 type InspectionCreateDTO struct {
 	ModuleTypeId uint64 `json:"module_type_id" form:"module_type_id"`
 	PlanId       uint64 `json:"plan_id" form:"plan_id"`
+	TeamId       uint64 `json:"team_id" from:"team_id"`
 	TransDate    string `json:"trans_date" form:"trans_date"`
 	EmpId        uint64 `json:"emp_id" form:"emp_id"`
 	AreaGroupId  uint64 `json:"area_group_id" form:"area_group_id"`

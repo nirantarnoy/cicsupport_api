@@ -110,6 +110,8 @@ func main() {
 	teaminspectionitemRoute := server.Group("api/teaminspectionitem", middleware.AuthorizeJWT(jwtService))
 	{
 		teaminspectionitemRoute.GET("/findbyteam/:id", teaminspectionitemController.FindInspectionItem)
+		teaminspectionitemRoute.POST("/findtransbyemp", teaminspectionitemController.FindTransByEmp)
+		teaminspectionitemRoute.GET("/findtranshistorybyemp/:id", teaminspectionitemController.FindTransHistoryByEmp)
 	}
 
 	carinspectionRoute := server.Group("api/carinspection", middleware.AuthorizeJWT(jwtService))
@@ -120,6 +122,7 @@ func main() {
 	{
 		carRoute.POST("/createcar", carController.CreateCar)
 		carRoute.GET("/listcarbyemp/:id", carController.ListCarByEmpId)
+		carRoute.POST("/closecar", carController.CloseCar)
 	}
 	teamNotifyRoute := server.Group("api/teamnotify", middleware.AuthorizeJWT(jwtService))
 	{

@@ -15,7 +15,7 @@ import (
 
 type CarRepository interface {
 	CreateCar(car entity.CarCreate) entity.CarCreate
-	ListCarByEmpId(empId uint64) entity.CarCreate
+	ListCarByEmpId(empId uint64) []entity.CarListEmp
 }
 
 type carRepository struct {
@@ -23,9 +23,9 @@ type carRepository struct {
 }
 
 // ListCarByEmpId implements CarRepository
-func (db *carRepository) ListCarByEmpId(empId uint64) entity.CarCreate {
-	var carList entity.CarCreate
-	db.connect.Table("car_inform").Where("emp_id = ?", empId).Scan(&carList)
+func (db *carRepository) ListCarByEmpId(empId uint64) []entity.CarListEmp {
+	var carList []entity.CarListEmp
+	db.connect.Table("car_inform").Select("car_inform.id,car.doc_no as car_no,car_inform.area_id,car_inform.car_date,car_inform.car_description,car_inform.car_type,car_inform.status,car_inform.created_by,car_inform.emp_id,area_definition.name as area_name,car.is_new,car.target_finish_date,car.responsibility,car_inform.car_non_conform").Joins("inner join area_definition on car_inform.area_id = area_definition.id left join car on car_inform.id = car.car_inform_id").Where("emp_id = ?", empId).Scan(&carList)
 	return carList
 }
 

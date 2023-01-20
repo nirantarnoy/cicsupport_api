@@ -14,6 +14,7 @@ import (
 type CarController interface {
 	CreateCar(ctx *gin.Context)
 	ListCarByEmpId(ctx *gin.Context)
+	CloseCar(ctx *gin.Context)
 }
 type carController struct {
 	carService service.CarService
@@ -34,6 +35,27 @@ func (db *carController) ListCarByEmpId(ctx *gin.Context) {
 
 // CreateCar implements CarController
 func (db *carController) CreateCar(ctx *gin.Context) {
+	//fmt.Print(ctx)
+	var carDto dto.CarCreateDto
+	errDto := ctx.ShouldBind(&carDto)
+	if errDto != nil {
+		fmt.Printf("%v", errDto)
+		res := "Fail to process"
+		ctx.JSON(http.StatusBadRequest, res)
+	} else {
+		authHeader := ctx.GetHeader("Authorization")
+		userId := db.getUserIdByToken(authHeader)
+		convertUserId, err := strconv.ParseUint(userId, 10, 64)
+
+		if err == nil {
+			carDto.CreatedBy = convertUserId
+		}
+		res := db.carService.CreateCar(carDto)
+		ctx.JSON(http.StatusCreated, res)
+	}
+
+}
+func (db *carController) CloseCar(ctx *gin.Context) {
 	//fmt.Print(ctx)
 	var carDto dto.CarCreateDto
 	errDto := ctx.ShouldBind(&carDto)

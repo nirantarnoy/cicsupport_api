@@ -14,6 +14,7 @@ var (
 	// dbPassMysql = ""
 
 	db = [2]string{"192.168.60.189", "cicsupport"}
+	//db = [2]string{"192.168.1.104", "cicsupport"}
 
 	dsn1 = fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUserMysql, dbPassMysql,
 		db[0], db[1])

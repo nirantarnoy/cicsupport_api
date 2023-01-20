@@ -18,7 +18,7 @@ type UserConnect struct {
 // FindUserTeam implements UserRepository
 func (db *UserConnect) FindUserTeam(team_id uint64) []entity.TeamMember {
 	var member []entity.TeamMember
-	db.connect.Table("person").Select("current_team_id,employee.fname,employee.lname").Joins("inner join employee on employee.id = person.emp_id").Where("person.current_team_id = ?", team_id).Scan(&member)
+	db.connect.Table("person").Select("current_team_id,employee.fname,employee.lname,inspection_team_assign.is_head").Joins("inner join employee on employee.id = person.emp_id inner join inspection_team_assign on inspection_team_assign.team_id = person.current_team_id and inspection_team_assign.user_id = person.id").Where("person.current_team_id = ?", team_id).Scan(&member)
 	return member
 
 	// rows, err := db.connect.Table().Rows();

@@ -19,4 +19,5 @@ type TeamInspectionItem struct {
 	Is_enable            uint64 `json:"is_enable"`
 	Seq_sort             uint64 `json:"seq_sort"`
 	Seq_sort_item        uint64 `json:"seq_sort_item"`
+	Plan_num             uint64 `json:"plan_num"`
 }
