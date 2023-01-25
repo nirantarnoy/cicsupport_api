@@ -127,6 +127,7 @@ func main() {
 	teamNotifyRoute := server.Group("api/teamnotify", middleware.AuthorizeJWT(jwtService))
 	{
 		teamNotifyRoute.GET("/findempnotify/:id", teamNotifyController.FindEmpNotify)
+		teamNotifyRoute.GET("/findteamnotify/:id", teamNotifyController.FindTeamNotify)
 	}
 
 	server.Run(":1223")

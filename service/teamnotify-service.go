@@ -7,6 +7,7 @@ import (
 
 type TeamNotifyService interface {
 	FindEmpNotify(emp_id uint64) []entity.TeamNotify
+	FindTeamNotify(emp_id uint64) []entity.TeamNotify
 }
 
 type teamNotify struct {
@@ -16,6 +17,9 @@ type teamNotify struct {
 // FindEmpNotify implements TeamNotifyService
 func (db *teamNotify) FindEmpNotify(emp_id uint64) []entity.TeamNotify {
 	return db.teamNotifyRepo.FindEmpNotify(emp_id)
+}
+func (db *teamNotify) FindTeamNotify(emp_id uint64) []entity.TeamNotify {
+	return db.teamNotifyRepo.FindTeamNotify(emp_id)
 }
 
 func NewTeamnotifyService(repo repository.TeamNotifyRepository) TeamNotifyService {

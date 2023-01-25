@@ -11,6 +11,7 @@ import (
 
 type TeamNofiryController interface {
 	FindEmpNotify(ctx *gin.Context)
+	FindTeamNotify(ctx *gin.Context)
 }
 
 type teamNotifyController struct {
@@ -20,6 +21,22 @@ type teamNotifyController struct {
 
 // FindEmpNotify implements TeamNofiryController
 func (db *teamNotifyController) FindEmpNotify(ctx *gin.Context) {
+	empid, err := strconv.ParseUint(ctx.Param("id"), 0, 0)
+	if err != nil {
+		res := "No param"
+		ctx.JSON(http.StatusBadRequest, res)
+	}
+	var teamnotify []entity.TeamNotify = db.teamNotifyService.FindEmpNotify(empid)
+	ctx.JSON(http.StatusOK, teamnotify)
+	// if (teamnotify == entity.TeamNotify{}) {
+	// 	res := "Not found data"
+	// 	ctx.JSON(http.StatusNotFound, res)
+	// } else {
+	// 	ctx.JSON(http.StatusOK, teamnotify)
+	// }
+
+}
+func (db *teamNotifyController) FindTeamNotify(ctx *gin.Context) {
 	empid, err := strconv.ParseUint(ctx.Param("id"), 0, 0)
 	if err != nil {
 		res := "No param"
